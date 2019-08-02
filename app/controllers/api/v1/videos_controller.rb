@@ -6,10 +6,15 @@ class Api::V1::VideosController < ApplicationController
     ActiveRecord::Associations::Preloader.new.preload(@videos.select(&:season?), :episodes)
   end
 
+  def purchase
+    options = params[:purchase_options] || {}
+    p options
+    @purchase = PurchaseService.perform(@current_user, options)
+  end
+
   protected
 
   def resources
     Video
   end
-
 end

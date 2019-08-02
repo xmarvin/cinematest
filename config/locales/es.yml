@@ -1,0 +1,4 @@
+es:
+  purchase_service:
+    already_purchased: Este video ya ha sido comprado
+    quality_not_valid: La calidad del video no está disponible

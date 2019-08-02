@@ -29,3 +29,5 @@ create_serial('El hombre de tu vida', 1)
   ].each do |title|
   Movie.create!(title: title, plot: 'comedia')
 end
+
+1..3.each { |i| User.create(email: "user#{i}@mail.com") }

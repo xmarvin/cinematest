@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_01_202842) do
+ActiveRecord::Schema.define(version: 2019_08_02_192501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,12 +25,31 @@ ActiveRecord::Schema.define(version: 2019_08_01_202842) do
     t.index ["video_id"], name: "index_episodes_on_video_id"
   end
 
-  create_table "videos", force: :cascade do |t|
-    t.string "type"
-    t.string "title"
-    t.string "plot"
+  create_table "purchases", force: :cascade do |t|
+    t.datetime "expires_at", null: false
+    t.string "video_quality", null: false
+    t.decimal "price", null: false
+    t.bigint "user_id", null: false
+    t.bigint "video_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_purchases_on_user_id"
+    t.index ["video_id"], name: "index_purchases_on_video_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "videos", force: :cascade do |t|
+    t.string "type", null: false
+    t.string "title", null: false
+    t.string "plot", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["type"], name: "index_videos_on_type"
   end
 
   add_foreign_key "episodes", "videos"
