@@ -1,0 +1,13 @@
+default: &default
+  adapter: postgresql
+  user: postgres
+  password: postgres
+  timeout: 5000
+
+development:
+  <<: *default
+  database: cinema_dev
+
+test:
+  <<: *default
+  database: cinema_test
