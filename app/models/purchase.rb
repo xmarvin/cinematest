@@ -1,8 +1,9 @@
 class Purchase < ApplicationRecord
+  AVAILABLE_QUALITY = ['hd', 'sd'].freeze
+
   belongs_to :user
   belongs_to :video
-  validates :user, :expires_at, :video_quality, :price, :video, presence: true
-  AVAILABLE_QUALITY = ['hd', 'sd'].freeze
+  validates :expires_at, :video_quality, :price, presence: true
 
   validates :video_quality, inclusion: { in: AVAILABLE_QUALITY }
   validate :validate_already_purchased, on: :create, if: -> { user.present? && video.present? }

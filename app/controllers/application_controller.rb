@@ -6,7 +6,7 @@ class ApplicationController < ActionController::API
   private
 
   def authenticate_user!
-    @current_user = User.find_by(params[:user_id])
+    @current_user = User.find_by(id: params[:user_id])
   end
 
 end

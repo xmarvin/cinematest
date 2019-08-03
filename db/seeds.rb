@@ -1,4 +1,5 @@
 Video.destroy_all
+User.destroy_all
 
 def create_serial(title, season_count)
   season_count.times do |season_number|
@@ -30,4 +31,4 @@ create_serial('El hombre de tu vida', 1)
   Movie.create!(title: title, plot: 'comedia')
 end
 
-1..3.each { |i| User.create(email: "user#{i}@mail.com") }
+(1..3).each { |i| User.create(email: "user#{i}@mail.com") }
