@@ -4,9 +4,9 @@ class Api::V1::PurchasesController < ApplicationController
   def index
     @purchases = active_purchases
       .paginate(page: params[:page])
-      .order('expires_at asc')
+      .order(expires_at: :asc)
 
-    ActiveRecord::Associations::Preloader.new.preload(@purchases.map(&:video).select(&:season?), :episodes)
+    Season.preload_relations(@purchases.map(&:video).select(&:season?))
   end
 
   def show
