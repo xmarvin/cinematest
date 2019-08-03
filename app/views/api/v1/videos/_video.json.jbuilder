@@ -6,7 +6,7 @@ json.created_at video.created_at
 if video.season?
   json.episodes video.episodes do |episode|
     json.cache! episode do
-      json.partial! 'episode', episode: episode
+      json.partial! 'api/v1/videos/episode', episode: episode
     end
   end
 end
