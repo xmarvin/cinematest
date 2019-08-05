@@ -9,4 +9,10 @@ class ApplicationController < ActionController::API
     @current_user = User.find_by(id: params[:user_id])
   end
 
+  def require_user!
+    if @current_user.nil?
+      head :unauthorized
+    end
+  end
+
 end

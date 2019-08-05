@@ -1,4 +1,5 @@
 class Api::V1::PurchasesController < ApplicationController
+  before_action :require_user!
   before_action :load_purchase, only: [:show]
 
   def index
@@ -15,6 +16,7 @@ class Api::V1::PurchasesController < ApplicationController
   def create
     options = params[:purchase] || {}
     @purchase = PurchaseService.perform(@current_user, options)
+    render status: @purchase.persisted? ? :created : :unprocessable_entity
   end
 
   private
@@ -23,12 +25,12 @@ class Api::V1::PurchasesController < ApplicationController
     @purchase = active_purchases.find_by(id: params[:id])
 
     if @purchase.nil?
-      head :not_found
+      head :unauthorized
     end
   end
 
   def active_purchases
-    Purchase.active.where(user: @current_user).includes(:video)
+    @current_user.purchases.active.includes(:video)
   end
 
 end
