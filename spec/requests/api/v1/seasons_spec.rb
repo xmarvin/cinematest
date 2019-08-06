@@ -11,6 +11,8 @@ RSpec.describe 'seasons', type: :request do
         expect(response).to have_http_status(200)
         expect(json_body['records'].length).to eql(1)
         expect(json_body['records'][0]['id']).to eql(season.id)
+        expect(json_body['records'][0]['episodes'][0]['number']).to eql(1)
+        expect(json_body['records'][0]['episodes'][1]['number']).to eql(2)
       end
     end
   end

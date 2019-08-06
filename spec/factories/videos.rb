@@ -16,5 +16,10 @@ FactoryBot.define do
   end
   factory :season, parent: :video do
     type { 'Season' }
+    after(:create) do |video|
+      (1..3).reverse_each do |i|
+        create :episode, number: i, title: "Episode #{i}", video: video
+      end
+    end
   end
 end
