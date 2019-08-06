@@ -14,17 +14,26 @@ RSpec.describe 'Purchases', type: :request do
   context 'valid user' do
     let(:user) { create(:user) }
     let(:user_id) { user.id }
-    describe 'index' do
-      it "returns a 403 if user not found" do
+    let!(:purchase) { create(:purchase, user: user) }
+    let(:video) { purchase.video }
+    describe 'get video' do
+      it "returns purchased video" do
         get '/api/v1/purchases.json', params: { user_id: user_id }
         expect(response).to have_http_status(200)
+        expect(json_body['records'][0]['video']['id']).to eql(video.id)
+      end
+      it "returns purchased video" do
+        get api_v1_purchase_path(purchase), params: { user_id: user_id }
+        expect(response).to have_http_status(200)
+        expect(json_body['video']['id']).to eql(video.id)
       end
     end
     describe 'create' do
-      let(:video) { create(:video) }
+      let(:video) { create(:video, :purchase_options) }
+      let(:purchase_option) { video.purchase_options.first }
       context 'valid params' do
         let(:purchase_params) do
-          { video_quality: 'hd', video_id: video.id }
+          { purchase_option_id: purchase_option.id }
         end
         it 'creates purchase record' do
           post '/api/v1/purchases.json', params: { user_id: user.id, purchase: purchase_params }

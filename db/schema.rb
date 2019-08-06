@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_02_192501) do
+ActiveRecord::Schema.define(version: 2019_08_05_153815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,16 +25,24 @@ ActiveRecord::Schema.define(version: 2019_08_02_192501) do
     t.index ["video_id"], name: "index_episodes_on_video_id"
   end
 
-  create_table "purchases", force: :cascade do |t|
-    t.datetime "expires_at", null: false
+  create_table "purchase_options", force: :cascade do |t|
     t.string "video_quality", null: false
     t.decimal "price", null: false
-    t.bigint "user_id", null: false
     t.bigint "video_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["video_id"], name: "index_purchase_options_on_video_id"
+  end
+
+  create_table "purchases", force: :cascade do |t|
+    t.datetime "expires_at", null: false
+    t.bigint "user_id", null: false
+    t.bigint "purchase_option_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["expires_at"], name: "index_purchases_on_expires_at"
+    t.index ["purchase_option_id"], name: "index_purchases_on_purchase_option_id"
     t.index ["user_id"], name: "index_purchases_on_user_id"
-    t.index ["video_id"], name: "index_purchases_on_video_id"
   end
 
   create_table "users", force: :cascade do |t|

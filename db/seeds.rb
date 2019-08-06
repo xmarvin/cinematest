@@ -10,6 +10,8 @@ def create_serial(title, season_count)
       (1..(5 + rand(5))).map do |i|
         s.episodes.build(video: s, number: i, title: "Episodio #{i}")
       end
+      s.purchase_options.build(price: 2.99, video_quality: 'hd')
+      s.purchase_options.build(price: 1.99, video_quality: 'sd')
     end.save!
   end
 end
@@ -28,7 +30,10 @@ create_serial('El hombre de tu vida', 1)
   'Aquí Entre Nos',
   'Diarios de Motocicleta'
   ].each do |title|
-  Movie.create!(title: title, plot: 'comedia')
+  Movie.new(title: title, plot: 'comedia').tap do |s|
+    s.purchase_options.build(price: 2.99, video_quality: 'hd')
+    s.purchase_options.build(price: 1.99, video_quality: 'sd')
+  end.save!
 end
 
 (1..3).each { |i| User.create(email: "user#{i}@mail.com") }

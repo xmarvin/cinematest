@@ -12,9 +12,10 @@ gem 'puma', '~> 3.11'
 gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'will_paginate'
-group :development, :test do
+group :test do
   gem 'rspec-rails'
   gem "factory_bot_rails"
+  gem 'faker'
 end
 
 group :development do

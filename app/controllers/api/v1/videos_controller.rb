@@ -1,6 +1,6 @@
 class Api::V1::VideosController < ApplicationController
   def index
-    @videos = resources.paginate(page: params[:page]).order(created_at: :desc)
+    @videos = resources.includes(:purchase_options).paginate(page: params[:page]).order(created_at: :desc)
 
     Season.preload_relations(@videos.select(&:season?))
   end
@@ -13,6 +13,10 @@ class Api::V1::VideosController < ApplicationController
   protected
 
   def resources
-    Video
+    videos = Video
+    if params[:type].present?
+      videos = videos.where(type: params[:type])
+    end
+    videos
   end
 end

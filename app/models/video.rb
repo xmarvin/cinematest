@@ -3,6 +3,8 @@ class Video < ApplicationRecord
   MOVIE_TYPE = 'Movie'.freeze
   AVAILABLE_TYPES = [SEASON_TYPE, MOVIE_TYPE]
 
+  has_many :purchase_options
+
   validates :type, inclusion: { in: AVAILABLE_TYPES }
   validates :title, presence: true, uniqueness: true
 
