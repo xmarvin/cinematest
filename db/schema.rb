@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_05_153815) do
+ActiveRecord::Schema.define(version: 2019_08_02_192501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 2019_08_05_153815) do
   create_table "purchase_options", force: :cascade do |t|
     t.string "video_quality", null: false
     t.decimal "price", null: false
-    t.bigint "video_id", null: false
+    t.bigint "video_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["video_id"], name: "index_purchase_options_on_video_id"
@@ -36,8 +36,8 @@ ActiveRecord::Schema.define(version: 2019_08_05_153815) do
 
   create_table "purchases", force: :cascade do |t|
     t.datetime "expires_at", null: false
-    t.bigint "user_id", null: false
-    t.bigint "purchase_option_id", null: false
+    t.bigint "user_id"
+    t.bigint "purchase_option_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["expires_at"], name: "index_purchases_on_expires_at"
@@ -61,4 +61,7 @@ ActiveRecord::Schema.define(version: 2019_08_05_153815) do
   end
 
   add_foreign_key "episodes", "videos"
+  add_foreign_key "purchase_options", "videos"
+  add_foreign_key "purchases", "purchase_options"
+  add_foreign_key "purchases", "users"
 end
